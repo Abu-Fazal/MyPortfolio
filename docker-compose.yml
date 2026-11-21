@@ -1,0 +1,87 @@
+services:
+  # Local MongoDB Database
+  mongodb:
+    image: mongo:7.0
+    container_name: myportfolio-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password123
+      MONGO_INITDB_DATABASE: myportfolio
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - portfolio-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Express Backend API
+  backend:
+    build:
+      context: .
+      dockerfile: docker/backend.Dockerfile
+    container_name: myportfolio-backend
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      NODE_ENV: development
+      PORT: 5000
+      CLIENT_URL: http://localhost:5173
+      MONGODB_URI: mongodb://admin:password123@mongodb:27017/myportfolio?authSource=admin
+    volumes:
+      - ./backend:/app/backend
+      - /app/backend/node_modules
+      - /app/node_modules
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - portfolio-network
+
+  # React + Vite Frontend
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend.Dockerfile
+      target: dev
+    container_name: myportfolio-frontend
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_URL: http://localhost:5000/api
+    volumes:
+      - ./frontend:/app/frontend
+      - /app/frontend/node_modules
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - portfolio-network
+
+  # Grafana k6 Performance Testing Service
+  k6:
+    image: grafana/k6:latest
+    container_name: myportfolio-k6
+    profiles:
+      - testing
+    environment:
+      BASE_URL: http://backend:5000
+    volumes:
+      - ./tests/k6:/scripts
+    networks:
+      - portfolio-network
+
+volumes:
+  mongo_data:
+    driver: local
+
+networks:
+  portfolio-network:
+    driver: bridge
