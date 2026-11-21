@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.0.2] - 2026-11-21
+
+### Successful Vercel Multi-Service Deployment & Verification
+
+This release verifies that both the React 19 frontend and the Express 5 backend are successfully deployed and running live together on Vercel with 100% test pass rate.
+
+#### Added & Improved
+- **Vercel Services Architecture:** Implemented official multi-service schema in `vercel.json` with explicit `backend` entrypoint (`src/server.js`) and top-level rewrites (`/api/*` -> `backend`, `/*` -> `frontend`).
+- **Production Routing Parity:** Verified seamless coexistence of Vite client SPA and Express serverless API on a single production domain without CORS barriers.
+- **Contract & Test Verification:** 100% test pass rate across native unit and integration test suites (Node 20 test runner).
+- **Code Quality:** Zero warnings and zero errors verified by Oxlint across all monorepo files.
+
+---
+
 ## [0.0.1] - 2026-11-21
 
 ### Initial Architecture & Monorepo Setup
