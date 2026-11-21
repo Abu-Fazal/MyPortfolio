@@ -1,16 +1,24 @@
 ---
-description: Unified Agent Rules for Cursor
+description: Unified Agent Rules and Strict Guardrails for Cursor
 globs: *
 alwaysApply: true
 ---
 
-# Cursor Agent Guidelines
+# Cursor Agent Guidelines & Mandatory Guardrails
 
-Cursor must strictly follow the shared repository rules defined in:
+Cursor must strictly follow the shared repository rules and guardrails:
+
+## Strict Restrictions:
+- **Zero Git Commands:** Never execute any `git` command (`git add`, `git commit`, `git push`, etc.). Only the user is allowed to run Git operations.
+- **Zero Deletion:** Never delete any file, folder, or database records.
+- **Workspace Containment:** Stay strictly within `MyPortfolio`. Never access external paths.
+- **Explicit Approval Required:** Never create files or folders without an approved plan and user consent.
+
+Full specifications:
 - `AGENTS.md`
+- `.agents/rules/guardrails.md`
 - `.agents/rules/core-standards.md`
 - `.agents/rules/architecture-and-code.md`
-- `.agents/rules/git-workflow.md`
 - `.agents/rules/security-and-safety.md`
 
 All files, commits, and comments in the repository must be written in English.
