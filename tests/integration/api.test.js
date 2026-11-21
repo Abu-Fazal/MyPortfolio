@@ -20,6 +20,7 @@ describe('Integration Contracts & Environmental Constraints', () => {
 
     const vercelConfig = JSON.parse(fs.readFileSync(path.resolve('vercel.json'), 'utf8'));
     assert.ok(vercelConfig.services.backend, 'Backend service must be defined');
+    assert.strictEqual(vercelConfig.services.backend.entrypoint, 'src/server.js', 'Backend entrypoint must be src/server.js');
     assert.ok(vercelConfig.services.frontend, 'Frontend service must be defined');
     assert.ok(vercelConfig.rewrites.some(r => r.source === '/api/(.*)'), 'API rewrite rule must exist');
   });
