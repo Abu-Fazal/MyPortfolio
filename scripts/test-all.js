@@ -30,7 +30,7 @@ for (const suite of testSuites) {
   try {
     execSync(suite.cmd, { cwd: rootDir, stdio: 'inherit' });
     console.log(`[PASSED] ${suite.name}\n`);
-  } catch (error) {
+  } catch {
     console.error(`[FAILED] ${suite.name}\n`);
     failed = true;
   }

@@ -10,23 +10,29 @@ This document is the real-time operational context shared across all active AI a
 - **Project Name:** MyPortfolio (Personal Portfolio & Technical Showcase)
 - **Project Owner:** Abu Fazal
 - **Active Agents:** Cline, Qoder, Google Antigravity
+- **Current Version:** `0.0.1` (Tag: `v0.0.1`)
 - **Current Phase:** Phase 0 Completed / Ready for Phase 1
-- **Current Status:** Phase 0 Setup Verified (Awaiting User npm install and review)
 - **Last Updated:** 2026-11-21
 
 ---
 
 ## 2. Active Working Context
-- **Completed in Phase 0:**
+- **Completed in Phase 0 (Release v0.0.1):**
   - Multi-agent state engine created (`CURRENT_STATE.md`, `ROADMAP.md`, `DECISIONS.md`).
   - Active adapter files bound: `.clinerules`, `.qoder/rules.md`, `.antigravity/rules/unified-rules.md`.
   - Root monorepo configuration created (`package.json` with npm workspaces `frontend` and `backend`).
-  - Backend skeleton created (`backend/package.json`, `backend/src/server.js`, `backend/.env.example`, placeholder folder trees).
+  - Backend skeleton created (`backend/package.json`, `backend/src/server.js`, `backend/.env.example`).
   - Frontend skeleton created (`frontend/package.json`, `frontend/vite.config.js`, `frontend/tailwind.config.js`, `frontend/postcss.config.js`, `frontend/index.html`, `frontend/src/`).
   - Unified `vercel.json` monorepo routing configured.
-  - Master roadmap (`ROADMAP.md`) Phase 0 items marked complete.
+  - Oxlint integrated for ultra-fast monorepo linting (`.oxlintrc.json`).
+  - Full Docker stack configured (`docker/`, `docker-compose.yml`, `docker-compose.prod.yml`).
+  - Production Nginx suite configured (`docker/nginx/` with security, compression, rate-limiting, and error pages).
+  - Grafana k6 performance testing suite configured (`tests/k6/`).
+  - Master test scripts and native test runner verified (6/6 passing).
+  - GitHub Actions CI/CD workflows configured (`ci.yml`, `deploy.yml`).
+  - Changelog established (`CHANGELOG.md` with version `0.0.1`).
 - **Currently Active Task:**
-  - Phase 0 Handover to user for local package installation (`npm install`) and Git commit.
+  - Git tag creation and handover to user for `v0.0.1`.
 - **Immediate Next Task:**
   - **Phase 1: Backend Foundation** (Mongoose serverless connection pooling, Zod validation middleware, error handler, and MongoDB entity models).
 
@@ -37,20 +43,3 @@ This document is the real-time operational context shared across all active AI a
 2. **Never repeat user instructions:** Inherit ongoing context from this file.
 3. **Guardrails reminder:** Zero Git commands by AI agents. Zero file/folder deletions. Zero database deletions. Workspace boundary locked to `MyPortfolio`. No file creation without approved plan.
 4. **After any work:** Mark tasks in `ROADMAP.md` and log current progress in this file.
-
-- **Added Tooling:**
-  - Oxlint integrated for ultra-fast monorepo linting (`.oxlintrc.json`, `npm run lint`).
-
-- **Added Containerization:**
-  - Full Docker stack configured (`docker/`, `docker-compose.yml`, `docker-compose.prod.yml`).
-
-- **Production Nginx Setup:**
-  - Complete modular Nginx suite configured (`docker/nginx/` with security, compression, rate-limiting, SPA proxying, and custom error pages).
-
-- **Performance Testing Suite:**
-  - Grafana k6 configured (`tests/k6/` with smoke, load, stress, and spike test scenarios + Docker service).
-
-- **Unified Scripts, Tests & CI/CD:**
-  - `scripts/` orchestrators created (`build.js`, `test-all.js`, `validate-env.js`).
-  - `tests/` hub populated (`unit/`, `integration/`, `k6/`, `run-all-tests.js`).
-  - GitHub Actions CI/CD workflows created (`.github/workflows/ci.yml`, `.github/workflows/deploy.yml`).

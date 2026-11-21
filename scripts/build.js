@@ -19,7 +19,7 @@ function runStep(name, command) {
   try {
     execSync(command, { cwd: rootDir, stdio: 'inherit' });
     console.log(`[PASSED] ${name}`);
-  } catch (err) {
+  } catch {
     console.error(`[FAILED] ${name}`);
     process.exit(1);
   }
