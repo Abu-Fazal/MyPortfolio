@@ -1,0 +1,72 @@
+name: Monorepo CI Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  lint-and-validate:
+    name: Code Quality & Guardrails
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Root Dependencies
+        run: npm ci || npm install --legacy-peer-deps
+
+      - name: Validate Guardrails
+        run: python .agents/hooks/guardrail-validator.py "CI guardrail check"
+
+      - name: Run Oxlint Quality Check
+        run: npm run lint
+
+  test-and-build:
+    name: Test & Build Monorepo
+    runs-on: ubuntu-latest
+    needs: lint-and-validate
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci || npm install --legacy-peer-deps
+
+      - name: Run Unit & Integration Tests
+        run: npm run test:native
+
+      - name: Build Frontend Distribution
+        run: npm run build:frontend
+
+      - name: Validate Vercel Configuration
+        run: test -f vercel.json
+
+  docker-verification:
+    name: Docker Stack Verification
+    runs-on: ubuntu-latest
+    needs: lint-and-validate
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Verify Docker Compose Config
+        run: docker compose config

@@ -1,0 +1,34 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: docker/backend.Dockerfile
+    container_name: myportfolio-backend-prod
+    restart: always
+    environment:
+      NODE_ENV: production
+      PORT: 5000
+    env_file:
+      - backend/.env
+    ports:
+      - "5000:5000"
+    networks:
+      - portfolio-network-prod
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend.Dockerfile
+      target: prod
+    container_name: myportfolio-frontend-prod
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - portfolio-network-prod
+
+networks:
+  portfolio-network-prod:
+    driver: bridge

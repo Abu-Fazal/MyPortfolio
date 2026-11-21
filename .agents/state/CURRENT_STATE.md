@@ -37,3 +37,20 @@ This document is the real-time operational context shared across all active AI a
 2. **Never repeat user instructions:** Inherit ongoing context from this file.
 3. **Guardrails reminder:** Zero Git commands by AI agents. Zero file/folder deletions. Zero database deletions. Workspace boundary locked to `MyPortfolio`. No file creation without approved plan.
 4. **After any work:** Mark tasks in `ROADMAP.md` and log current progress in this file.
+
+- **Added Tooling:**
+  - Oxlint integrated for ultra-fast monorepo linting (`.oxlintrc.json`, `npm run lint`).
+
+- **Added Containerization:**
+  - Full Docker stack configured (`docker/`, `docker-compose.yml`, `docker-compose.prod.yml`).
+
+- **Production Nginx Setup:**
+  - Complete modular Nginx suite configured (`docker/nginx/` with security, compression, rate-limiting, SPA proxying, and custom error pages).
+
+- **Performance Testing Suite:**
+  - Grafana k6 configured (`tests/k6/` with smoke, load, stress, and spike test scenarios + Docker service).
+
+- **Unified Scripts, Tests & CI/CD:**
+  - `scripts/` orchestrators created (`build.js`, `test-all.js`, `validate-env.js`).
+  - `tests/` hub populated (`unit/`, `integration/`, `k6/`, `run-all-tests.js`).
+  - GitHub Actions CI/CD workflows created (`.github/workflows/ci.yml`, `.github/workflows/deploy.yml`).

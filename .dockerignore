@@ -1,0 +1,34 @@
+# Git and OS metadata
+.git
+.gitignore
+.DS_Store
+Thumbs.db
+
+# Dependencies and caches
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Build outputs
+dist
+build
+out
+.next
+
+# Environment and secrets
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# Agent and internal tools
+.agents
+.antigravity
+.cursor
+.github
+.kilo
+.qoder
+docs

@@ -2,6 +2,7 @@
   "name": "myportfolio-monorepo",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "description": "Abu Fazal Portfolio - Monorepo architecture for Frontend and Backend",
   "workspaces": [
     "frontend",
@@ -11,13 +12,32 @@
     "dev": "concurrently \"npm run dev --workspace=backend\" \"npm run dev --workspace=frontend\"",
     "dev:frontend": "npm run dev --workspace=frontend",
     "dev:backend": "npm run dev --workspace=backend",
-    "build": "npm run build --workspace=frontend",
+    "build": "node scripts/build.js",
+    "build:frontend": "npm run build --workspace=frontend",
     "start": "npm run start --workspace=backend",
-    "validate:guardrails": "python .agents/hooks/guardrail-validator.py"
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "test": "node scripts/test-all.js",
+    "test:native": "node tests/run-all-tests.js",
+    "validate:env": "node scripts/validate-env.js",
+    "validate:guardrails": "python .agents/hooks/guardrail-validator.py",
+    "docker:dev": "docker compose up --build",
+    "docker:down": "docker compose down",
+    "docker:prod": "docker compose -f docker-compose.prod.yml up --build",
+    "test:k6:smoke": "k6 run tests/k6/scenarios/smoke-test.js",
+    "test:k6:load": "k6 run tests/k6/scenarios/load-test.js",
+    "test:k6:stress": "k6 run tests/k6/scenarios/stress-test.js",
+    "test:k6:docker": "docker compose run --rm k6 run /scripts/scenarios/smoke-test.js"
+  },
+  "overrides": {
+    "react-helmet-async": {
+      "react": "$react"
+    }
   },
   "devDependencies": {
     "concurrently": "^9.1.2",
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "oxlint": "^0.15.11"
   },
   "engines": {
     "node": ">=20.0.0",

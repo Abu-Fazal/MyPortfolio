@@ -34,15 +34,15 @@ app.get("/api", (req, res) => {
   });
 });
 
-// Fallback 404 handler for unknown API routes
-app.use("/api/*", (req, res) => {
+// Fallback 404 handler for unknown API routes (Express 5 compatible)
+app.use("/api", (req, res) => {
   res.status(404).json({
     error: "API endpoint not found"
   });
 });
 
-// Local development server listener
-if (process.env.NODE_ENV !== "production") {
+// Local development server listener (skipped in test & production)
+if (process.env.NODE_ENV !== "production" && process.env.NODE_ENV !== "test") {
   app.listen(PORT, () => {
     console.log(`[Backend] Server running on http://localhost:${PORT}`);
   });
