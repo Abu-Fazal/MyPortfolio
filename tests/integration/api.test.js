@@ -14,12 +14,13 @@ describe('Integration Contracts & Environmental Constraints', () => {
     assert.ok(content.includes('try_files $uri $uri/ /index.html;'), 'Must support SPA routing');
   });
 
-  test('Vercel routing correctly rewrites /api routes to backend handler', async () => {
+  test('Vercel routing correctly configures multi-service layout and rewrites', async () => {
     const fs = await import('node:fs');
     const path = await import('node:path');
 
     const vercelConfig = JSON.parse(fs.readFileSync(path.resolve('vercel.json'), 'utf8'));
-    assert.strictEqual(vercelConfig.version, 2);
+    assert.ok(vercelConfig.services.backend, 'Backend service must be defined');
+    assert.ok(vercelConfig.services.frontend, 'Frontend service must be defined');
     assert.ok(vercelConfig.rewrites.some(r => r.source === '/api/(.*)'), 'API rewrite rule must exist');
   });
 });

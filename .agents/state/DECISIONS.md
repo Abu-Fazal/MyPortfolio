@@ -113,3 +113,12 @@ This file tracks all core architectural decisions accepted for the project.
   - Create `tests/`: `unit/` (Node native test runner for frontend and backend), `integration/` (routing and proxy contracts), and `k6/` (load tests).
   - Create `.github/workflows/`: `ci.yml` (automated lint, test, build, and docker compose verification) and `deploy.yml` (Vercel deployment pipeline).
 - **Consequences:** Consistent, automated quality gates before any code merges or deploys.
+
+
+---
+
+### ADR-013: Vercel Services Multi-Service Architecture
+- **Status:** Accepted
+- **Context:** Vercel auto-detected independent frontend and backend workspaces in the monorepo and requested Vercel Services schema configuration.
+- **Decision:** Adopt official `$schema: "https://openapi.vercel.sh/vercel.json"` with top-level `services` (`backend`, `frontend`) and clean top-level rewrites routing `/api/*` to `backend` and `/*` to `frontend`.
+- **Consequences:** Native Vercel deployment button activation and seamless multi-service execution on a single domain.
