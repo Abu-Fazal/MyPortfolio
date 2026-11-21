@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+# Run shared hook
+if [ -f ".agents/hooks/pre-commit.sh" ]; then
+    sh .agents/hooks/pre-commit.sh
+fi
